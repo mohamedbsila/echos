@@ -12,19 +12,63 @@ class BackgroundMusic {
         
         // Music tracks for different modes
         this.musicTracks = {
-            dark: 'music/FREE TRAVIS SCOTT Type Beat - _KICK OUT_ [w9T3IoCNT6Q].mp3',
-            light: 'music/[FREE] JID Type Beat _The Recreation_ [GSb3JGYSEI4].mp3'
+            dark: '/music/FREE TRAVIS SCOTT Type Beat - _KICK OUT_ [w9T3IoCNT6Q].wav',
+            light: '/music/[FREE] JID Type Beat _The Recreation_ [GSb3JGYSEI4].wav'
         };
         
         // Switch sound effect
-        this.switchSoundUrl = 'music/radio switch sound effect.wav';
+        this.switchSoundUrl = '/music/radio switch sound effect.wav';
         
         // Audio context for effects
         this.audioContext = null;
         this.gainNode = null;
         this.musicControls = null;
         
+        // Timeline elements
+        this.progressBar = null;
+        this.currentTimeDisplay = null;
+        this.totalTimeDisplay = null;
+        
+        // Autoplay attempts counter
+        this.autoplayAttempts = 0;
+        this.maxAutoplayAttempts = 3; // Reduced number of attempts
+        
+        // Load saved state from localStorage
+        this.loadSavedState();
+        
         this.init();
+    }
+    
+    loadSavedState() {
+        try {
+            // Check if we have a saved state
+            const savedState = localStorage.getItem('musicPlayerState');
+            if (savedState) {
+                const state = JSON.parse(savedState);
+                this.isPlaying = state.isPlaying === true; // Default to false if undefined
+                this.volume = state.volume || 0.3;
+                console.log("Loaded music state:", this.isPlaying ? "Playing" : "Stopped");
+            } else {
+                // Default to stopped if no saved state
+                this.isPlaying = false;
+            }
+        } catch (error) {
+            console.error("Error loading saved music state:", error);
+            this.isPlaying = false;
+        }
+    }
+    
+    saveState() {
+        try {
+            const state = {
+                isPlaying: this.isPlaying,
+                volume: this.volume,
+                timestamp: new Date().getTime()
+            };
+            localStorage.setItem('musicPlayerState', JSON.stringify(state));
+        } catch (error) {
+            console.error("Error saving music state:", error);
+        }
     }
     
     init() {
@@ -54,8 +98,41 @@ class BackgroundMusic {
         // Add event listeners
         this.addEventListeners();
         
-        // Try to play immediately on page load
-        this.setupAutoplay();
+        // Handle visibility changes
+        this.handleVisibilityChanges();
+        
+        // Check if we should start playing based on saved state
+        if (this.isPlaying) {
+            // Only attempt to play if the user previously had music playing
+            this.tryPlayAudio();
+        } else {
+            // Update UI to show stopped state
+            this.updatePlayButton(false);
+        }
+    }
+    
+    handleVisibilityChanges() {
+        // Handle tab/window visibility changes
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                // Don't restart music if it was stopped
+                if (this.isPlaying && this.audio.paused) {
+                    // Only resume if it was previously playing
+                    this.audio.play().catch(err => {
+                        console.log("Could not resume audio on visibility change:", err);
+                    });
+                }
+            } else {
+                // Tab is hidden, we don't need to do anything special
+                // The browser will continue playing audio in background
+            }
+        });
+        
+        // Also handle page unload to save state
+        window.addEventListener('beforeunload', () => {
+            // Save current state before page unloads
+            this.saveState();
+        });
     }
     
     initAudioContext() {
@@ -78,23 +155,18 @@ class BackgroundMusic {
     }
     
     setupAutoplay() {
-        // Only try once on window load
-        window.addEventListener('load', () => {
-            // Show message immediately rather than trying autoplay
-            this.showSimplifiedAutoplayMessage();
-        }, { once: true });
+        // No automatic autoplay - we'll rely on saved state instead
         
-        // Try on first user interaction with the page
-        const userInteractionEvents = ['click', 'touchstart', 'keydown', 'scroll'];
+        // Method: Try on first user interaction with the page
+        const userInteractionEvents = ['click', 'touchstart', 'keydown'];
         const handleUserInteraction = () => {
-            if (!this.isPlaying) {
-                // Remove any existing messages
-                const existingMessage = document.getElementById('music-autoplay-message');
-                if (existingMessage) {
-                    existingMessage.remove();
-                }
-                
-                // Play music
+            // Resume audio context if suspended
+            if (this.audioContext && this.audioContext.state === 'suspended') {
+                this.audioContext.resume();
+            }
+            
+            // Only play if the saved state indicates it was playing
+            if (this.isPlaying && this.audio.paused) {
                 this.play();
             }
             
@@ -105,8 +177,60 @@ class BackgroundMusic {
         };
         
         userInteractionEvents.forEach(event => {
-            document.addEventListener(event, handleUserInteraction);
+            document.addEventListener(event, handleUserInteraction, { once: true });
         });
+    }
+    
+    forceAutoplay() {
+        // Only attempt autoplay if the saved state indicates it was playing
+        if (!this.isPlaying) return;
+        
+        // Attempt to autoplay at regular intervals
+        this.autoplayInterval = setInterval(() => {
+            if (this.audio.playing || this.autoplayAttempts >= this.maxAutoplayAttempts) {
+                clearInterval(this.autoplayInterval);
+                return;
+            }
+            
+            this.autoplayAttempts++;
+            this.tryPlayAudio();
+            
+            // Create a silent audio context to unlock audio on iOS
+            if (this.audioContext && this.audioContext.state === 'suspended') {
+                // Create and play a silent buffer
+                const buffer = this.audioContext.createBuffer(1, 1, 22050);
+                const source = this.audioContext.createBufferSource();
+                source.buffer = buffer;
+                source.connect(this.audioContext.destination);
+                source.start(0);
+                
+                // Try to resume the audio context
+                this.audioContext.resume().then(() => {
+                    console.log("AudioContext resumed successfully");
+                    if (this.isPlaying) {
+                        this.play();
+                    }
+                }).catch(err => {
+                    console.log("Failed to resume AudioContext:", err);
+                });
+            }
+        }, 1000);
+    }
+    
+    tryPlayAudio() {
+        // Resume audio context if suspended
+        if (this.audioContext && this.audioContext.state === 'suspended') {
+            this.audioContext.resume();
+        }
+        
+        // Only play if the saved state indicates it should be playing
+        if (this.isPlaying) {
+            // Play the audio
+            this.play();
+        } else {
+            // Make sure UI shows stopped state
+            this.updatePlayButton(false);
+        }
     }
     
     showSimplifiedAutoplayMessage() {
@@ -331,6 +455,7 @@ class BackgroundMusic {
             // Create analyzer node
             this.analyser = this.audioContext.createAnalyser();
             this.analyser.fftSize = 256;
+            this.analyser.smoothingTimeConstant = 0.8;
             
             // Use a safer way to connect audio
             this.audio.addEventListener('canplaythrough', () => {
@@ -378,12 +503,23 @@ class BackgroundMusic {
                     this.getAverageFrequency(dataArray, 90, 120)   // High
                 ];
                 
-                // Update visualizer bars if not using CSS animations
-                if (!this.musicControls?.classList.contains('music-playing')) {
+                // Update visualizer bars with real-time audio data
                     this.visualizerBars.forEach((bar, i) => {
+                    // Scale the height based on frequency data
                         const height = Math.max(5, bands[i] / 255 * 20);
                         bar.style.height = `${height}px`;
-                    });
+                    
+                    // Add dynamic color based on intensity
+                    const intensity = bands[i] / 255;
+                    const hue = this.currentTheme === 'dark' ? 260 : 200; // Purple for dark, blue for light
+                    const saturation = 70 + (intensity * 30);
+                    const lightness = 50 + (intensity * 20);
+                    bar.style.backgroundColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+                });
+                
+                // Don't use CSS animations when we have real audio data
+                if (this.musicControls) {
+                    this.musicControls.classList.remove('music-playing');
                 }
             } catch (error) {
                 // Fallback to CSS animations if there's an error
@@ -392,9 +528,18 @@ class BackgroundMusic {
                 }
             }
         } else {
-            // Fallback to CSS animations if analyzer isn't available
-            if (this.musicControls && this.isPlaying) {
+            // Fallback to CSS animations if analyzer isn't available or audio is paused
+            if (this.musicControls) {
+                if (this.isPlaying) {
                 this.musicControls.classList.add('music-playing');
+                } else {
+                    this.musicControls.classList.remove('music-playing');
+                    
+                    // Reset bars to minimum height when paused
+                    this.visualizerBars.forEach(bar => {
+                        bar.style.height = '5px';
+                    });
+                }
             }
         }
         
@@ -433,6 +578,13 @@ class BackgroundMusic {
                             <span class="theme-dot light-dot ${this.currentTheme === 'light' ? 'active' : ''}"></span>
                         </div>
                     </div>
+                    <div class="timeline-container">
+                        <span class="current-time">0:00</span>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar"></div>
+                        </div>
+                        <span class="total-time">0:00</span>
+                    </div>
                     <div class="volume-slider-container">
                         <i class="fas fa-volume-up volume-icon"></i>
                         <input type="range" class="volume-slider" min="0" max="100" value="${this.volume * 100}">
@@ -449,6 +601,10 @@ class BackgroundMusic {
         this.playButton = controls.querySelector('.music-toggle');
         this.volumeSlider = controls.querySelector('.volume-slider');
         this.volumeIcon = controls.querySelector('.volume-icon');
+        this.progressBar = controls.querySelector('.progress-bar');
+        this.progressBarContainer = controls.querySelector('.progress-bar-container');
+        this.currentTimeDisplay = controls.querySelector('.current-time');
+        this.totalTimeDisplay = controls.querySelector('.total-time');
         
         // Add styles
         this.addStyles();
@@ -571,6 +727,46 @@ class BackgroundMusic {
                 box-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
             }
             
+            .timeline-container {
+                display: flex;
+                align-items: center;
+                margin-bottom: 5px;
+                width: 100%;
+            }
+            
+            .current-time, .total-time {
+                font-size: 10px;
+                color: white;
+                min-width: 30px;
+            }
+            
+            [data-theme="light"] .current-time, 
+            [data-theme="light"] .total-time {
+                color: #333;
+            }
+            
+            .progress-bar-container {
+                flex: 1;
+                height: 4px;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 2px;
+                margin: 0 5px;
+                cursor: pointer;
+                position: relative;
+            }
+            
+            [data-theme="light"] .progress-bar-container {
+                background: rgba(0, 0, 0, 0.2);
+            }
+            
+            .progress-bar {
+                height: 100%;
+                background: var(--primary-color);
+                border-radius: 2px;
+                width: 0%;
+                transition: width 0.1s linear;
+            }
+            
             .volume-slider-container {
                 display: flex;
                 align-items: center;
@@ -654,19 +850,38 @@ class BackgroundMusic {
             });
         }
         
+        // Progress bar click
+        if (this.progressBarContainer) {
+            this.progressBarContainer.addEventListener('click', (e) => {
+                const rect = this.progressBarContainer.getBoundingClientRect();
+                const pos = (e.clientX - rect.left) / rect.width;
+                if (this.audio.duration) {
+                    this.audio.currentTime = this.audio.duration * pos;
+                    this.updateProgressBar();
+                }
+            });
+        }
+        
         // Audio events
         if (this.audio) {
+            // Update timeline
+            this.audio.addEventListener('timeupdate', () => {
+                this.updateProgressBar();
+            });
+            
+            // Update total duration when metadata is loaded
+            this.audio.addEventListener('loadedmetadata', () => {
+                if (this.totalTimeDisplay) {
+                    this.totalTimeDisplay.textContent = this.formatTime(this.audio.duration);
+                }
+            });
+            
             this.audio.addEventListener('play', () => {
                 this.updatePlayButton(true);
             });
             
             this.audio.addEventListener('pause', () => {
                 this.updatePlayButton(false);
-            });
-            
-            // Handle autoplay restrictions
-            this.audio.addEventListener('canplaythrough', () => {
-                this.checkThemeAndPlay();
             });
             
             // Update track title when song changes
@@ -895,6 +1110,27 @@ class BackgroundMusic {
         }
     }
     
+    updateProgressBar() {
+        if (!this.audio || !this.progressBar || !this.currentTimeDisplay) return;
+        
+        // Update progress bar width
+        if (this.audio.duration) {
+            const progress = (this.audio.currentTime / this.audio.duration) * 100;
+            this.progressBar.style.width = `${progress}%`;
+        }
+        
+        // Update current time display
+        this.currentTimeDisplay.textContent = this.formatTime(this.audio.currentTime);
+    }
+    
+    formatTime(seconds) {
+        if (isNaN(seconds) || seconds === Infinity) return '0:00';
+        
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60).toString().padStart(2, '0');
+        return `${mins}:${secs}`;
+    }
+    
     checkThemeAndPlay() {
         // Update current theme
         this.currentTheme = document.body.getAttribute('data-theme') || 'dark';
@@ -935,7 +1171,7 @@ class BackgroundMusic {
     }
     
     play() {
-        if (this.audio && !this.isPlaying) {
+        if (this.audio && !this.audio.playing) {
             // Make sure we're using the right track
             const currentTheme = document.body.getAttribute('data-theme') || 'dark';
             if (this.currentTheme !== currentTheme) {
@@ -944,7 +1180,12 @@ class BackgroundMusic {
                 this.updateTrackInfo();
             }
             
-            // Fade in from zero if not already playing
+            // Resume audio context if suspended
+            if (this.audioContext && this.audioContext.state === 'suspended') {
+                this.audioContext.resume().catch(err => console.error("Failed to resume audio context:", err));
+            }
+            
+            // Set volume to zero initially for smooth fade-in
             this.audio.volume = 0;
             
             // Create play promise to handle autoplay restrictions
@@ -955,6 +1196,9 @@ class BackgroundMusic {
                     this.isPlaying = true;
                     this.updatePlayButton(true);
                     
+                    // Save state
+                    this.saveState();
+                    
                     // Fade in to target volume
                     this.fadeIn(this.volume);
                     
@@ -963,13 +1207,11 @@ class BackgroundMusic {
                         this.musicControls.classList.add('music-playing');
                     }
                 }).catch(error => {
-                    // Auto-play was prevented
-                    console.log("Autoplay prevented:", error);
+                    // Auto-play was prevented - will try again on user interaction
+                    console.log("Autoplay prevented - waiting for user interaction");
                     this.isPlaying = false;
                     this.updatePlayButton(false);
-                    
-                    // Show message to user
-                    this.showAutoplayMessage();
+                    this.saveState();
                 });
             }
         }
@@ -982,6 +1224,9 @@ class BackgroundMusic {
                 this.audio.pause();
                 this.isPlaying = false;
                 this.updatePlayButton(false);
+                
+                // Save state
+                this.saveState();
                 
                 // Deactivate visualizer
                 if (this.musicControls) {
@@ -1214,5 +1459,18 @@ class BackgroundMusic {
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    new BackgroundMusic();
-}); 
+    window.backgroundMusic = new BackgroundMusic();
+});
+
+// Add a global click handler to ensure music plays after user interaction
+document.addEventListener('click', function() {
+    if (window.backgroundMusic && window.backgroundMusic.isPlaying && window.backgroundMusic.audio.paused) {
+        // Only resume audio context if the music should be playing
+        if (window.backgroundMusic.audioContext && 
+            window.backgroundMusic.audioContext.state === 'suspended') {
+            window.backgroundMusic.audioContext.resume();
+        }
+        
+        window.backgroundMusic.play();
+    }
+}, { once: true }); 

@@ -1,18 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Echos | Music Producer & Rapper</title>
-    <link rel="stylesheet" href="css/preloader.css">
-    <link rel="stylesheet" href="css/sound-wave.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/theme-toggle.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <meta name="description" content="Official website of Echos - Music Producer & Rapper. Listen to latest tracks, check tour dates, and get in touch for bookings.">
-</head>
-<body>
+{% extends 'base.html.twig' %}
+
+{% block body %}
     <!-- Animated Background -->
     <div class="animated-bg"></div>
 
@@ -20,7 +8,9 @@
     <nav class="navbar">
         <div class="container">
             <div class="logo">
-                <h1 class="neon-text">ECHOS</h1>
+                <a href="">
+                    <img src="{{ asset('img/logo/echos-logo.png') }}" alt="ECHOS" class="logo-image">
+                </a>
             </div>
             <div class="menu-btn">
                 <div class="menu-btn__burger"></div>
@@ -52,9 +42,6 @@
                     <a href="#music" class="btn btn-primary pulse">Listen Now</a>
                     <a href="#contact" class="btn btn-secondary">Get In Touch</a>
                 </div>
-                
-                <!-- Interactive DJ Turntable will be inserted here by JS -->
-                <div class="dj-turntable"></div>
                 
                 <div class="scroll-indicator">
                     <div class="mouse">
@@ -440,14 +427,4 @@
             </div>
         </div>
     </footer>
-
-    <script src="js/preloader.js"></script>
-    <script src="js/particles.js"></script>
-    <script src="js/sound-wave.js"></script>
-    <script src="js/turntable.js"></script>
-    <script src="js/equalizer.js"></script>
-    <script src="js/theme-toggle.js"></script>
-    <script src="js/background-music.js"></script>
-    <script src="js/main.js"></script>
-</body>
-</html> 
+{% endblock %} 

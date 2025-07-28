@@ -110,11 +110,13 @@ document.addEventListener('DOMContentLoaded', () => {
         
         preloader.innerHTML = `
             <div class="preloader-logo">
+                <img src="/img/logo/echos-logo.png" alt="ECHOS">
                 <h1>ECHOS</h1>
             </div>
             <div class="vinyl-loader">
                 <div class="vinyl-record">
                     <div class="vinyl-grooves"></div>
+                    <div class="vinyl-reflection"></div>
                 </div>
                 <div class="vinyl-arm"></div>
             </div>

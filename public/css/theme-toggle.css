@@ -1,250 +1,297 @@
-/* Theme Toggle Styles */
+/* Theme Toggle Styles - Vinyl Style */
 .theme-toggle {
     position: fixed;
     top: 20px;
     right: 20px;
     z-index: 1001;
     cursor: pointer;
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 40px;
     transition: all 0.3s ease;
     perspective: 800px;
-}
-
-/* Add turntable arm */
-.theme-toggle::before {
-    content: '';
-    position: absolute;
-    width: 30px;
-    height: 4px;
-    background: var(--primary-color);
-    top: 50%;
-    right: -15px;
-    transform: translateY(-50%) rotate(-45deg);
-    transform-origin: right center;
-    border-radius: 2px;
-    box-shadow: 0 0 5px rgba(108, 68, 252, 0.5);
-    transition: all 0.3s ease;
-    z-index: -1;
-}
-
-/* Adjust arm position based on theme */
-[data-theme="light"] .theme-toggle::before {
-    transform: translateY(-50%) rotate(-15deg);
-}
-
-/* DJ Disk Toggle */
-.dj-disk-toggle {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: linear-gradient(145deg, #333, #222);
-    position: relative;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    transition: transform 0.5s ease, box-shadow 0.3s ease;
-    transform-style: preserve-3d;
-    animation: float 6s ease-in-out infinite;
+    border-radius: 30px;
+    background: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(108, 68, 252, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
     overflow: hidden;
 }
 
-/* Light mode disk */
-[data-theme="light"] .dj-disk-toggle {
-    background: linear-gradient(145deg, #e0e0e0, #f5f5f5);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+[data-theme="light"] .theme-toggle {
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(108, 68, 252, 0.3);
 }
 
-/* Vinyl grooves - multiple concentric circles */
-.dj-disk-toggle::before {
-    content: '';
+/* Theme icons */
+.theme-icon-container {
     position: absolute;
-    width: 70%;
-    height: 70%;
-    top: 15%;
-    left: 15%;
-    border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    box-sizing: border-box;
-    box-shadow: 
-        0 0 0 4px rgba(255, 255, 255, 0.05),
-        0 0 0 8px rgba(255, 255, 255, 0.03),
-        0 0 0 12px rgba(255, 255, 255, 0.02);
-}
-
-[data-theme="light"] .dj-disk-toggle::before {
-    border-color: rgba(0, 0, 0, 0.1);
-    box-shadow: 
-        0 0 0 4px rgba(0, 0, 0, 0.05),
-        0 0 0 8px rgba(0, 0, 0, 0.03),
-        0 0 0 12px rgba(0, 0, 0, 0.02);
-}
-
-/* Center label */
-.dj-disk-toggle::after {
-    content: '';
-    position: absolute;
-    width: 40%;
-    height: 40%;
-    top: 30%;
-    left: 30%;
-    border-radius: 50%;
-    background: var(--primary-color);
-    box-shadow: 0 0 10px rgba(108, 68, 252, 0.5);
-    transition: background-color 0.3s ease;
-}
-
-/* Add vinyl texture */
-.dj-disk-toggle .vinyl-texture {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
-    background: 
-        repeating-radial-gradient(
-            circle at center,
-            transparent 0px,
-            transparent 4px,
-            rgba(255, 255, 255, 0.03) 5px,
-            transparent 6px
-        );
-    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    box-sizing: border-box;
     pointer-events: none;
+    z-index: 2;
 }
 
-[data-theme="light"] .dj-disk-toggle .vinyl-texture {
-    background: 
-        repeating-radial-gradient(
-            circle at center,
-            transparent 0px,
-            transparent 4px,
-            rgba(0, 0, 0, 0.03) 5px,
-            transparent 6px
-        );
-}
-
-/* Sun/Moon Icon */
 .theme-icon {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     color: white;
-    font-size: 16px;
-    z-index: 2;
-}
-
-/* Label text */
-.label-text {
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 10px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    z-index: 2;
-    text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+    font-size: 14px;
+    opacity: 0.7;
     transition: all 0.3s ease;
+    filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5));
 }
 
-[data-theme="light"] .label-text {
+.theme-icon.active {
+    opacity: 1;
+    transform: scale(1.2);
+    animation: icon-pulse 2s infinite ease-in-out;
+}
+
+/* Music icon animations */
+.theme-icon.fa-music.active {
+    animation: music-bounce 2s infinite ease-in-out;
+}
+
+.theme-icon.fa-headphones.active {
+    animation: headphones-pulse 2s infinite ease-in-out;
+}
+
+@keyframes music-bounce {
+    0%, 100% { transform: translateY(0) scale(1.2); }
+    50% { transform: translateY(-3px) scale(1.3); }
+}
+
+@keyframes headphones-pulse {
+    0%, 100% { transform: scale(1.2); filter: brightness(1); }
+    50% { transform: scale(1.3); filter: brightness(1.3); }
+}
+
+[data-theme="light"] .theme-icon {
     color: #333;
 }
 
-/* Text change animation */
-.text-change {
-    animation: textPop 0.5s ease-out;
+/* Slider knob */
+.toggle-slider {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: white;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    z-index: 3;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
 
-@keyframes textPop {
-    0% {
-        transform: translate(-50%, -50%) scale(1);
-    }
-    50% {
-        transform: translate(-50%, -50%) scale(1.2);
-    }
-    100% {
-        transform: translate(-50%, -50%) scale(1);
-    }
+[data-theme="dark"] .toggle-slider {
+    left: 5px;
+    background: #333;
 }
 
-/* Rotation Animation */
-.theme-toggle:hover .dj-disk-toggle {
-    transform: rotate(45deg) translateZ(15px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+[data-theme="light"] .toggle-slider {
+    left: calc(100% - 35px);
+    background: #fff;
 }
 
-/* Arm movement on hover */
-.theme-toggle:hover::before {
-    transform: translateY(-50%) rotate(-30deg);
-    background: var(--secondary-color);
+/* Pulse animation for slider */
+.toggle-slider::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: var(--primary-color);
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.5s ease;
 }
 
-/* Active state - when clicked */
-.theme-toggle.active.rotate-right .dj-disk-toggle {
-    animation: spin-right 0.8s cubic-bezier(0.3, 0.7, 0.4, 1.5);
+.theme-toggle.active .toggle-slider::before {
+    opacity: 0.3;
+    transform: scale(1.5);
+    animation: pulse-out 0.8s ease-out;
 }
 
-.theme-toggle.active.rotate-left .dj-disk-toggle {
-    animation: spin-left 0.8s cubic-bezier(0.3, 0.7, 0.4, 1.5);
+/* Slider icon */
+.toggle-slider-icon {
+    font-size: 12px;
+    color: var(--primary-color);
+    z-index: 1;
+    transition: all 0.3s ease;
 }
 
-@keyframes spin-right {
-    0% {
-        transform: rotate(0) translateZ(0);
-    }
-    10% {
-        transform: rotate(15deg) translateZ(10px) scale(1.05);
-    }
-    30% {
-        transform: rotate(120deg) translateZ(20px) scale(1.1);
-    }
-    70% {
-        transform: rotate(280deg) translateZ(10px) scale(1.05);
-    }
-    100% {
-        transform: rotate(360deg) translateZ(0);
-    }
+/* Enhanced icon styles */
+.toggle-slider-icon.fa-headphones {
+    font-size: 14px;
+    color: var(--secondary-color);
+    animation: subtle-rotate 3s infinite ease-in-out;
 }
 
-@keyframes spin-left {
-    0% {
-        transform: rotate(0) translateZ(0);
-    }
-    10% {
-        transform: rotate(-15deg) translateZ(10px) scale(1.05);
-    }
-    30% {
-        transform: rotate(-120deg) translateZ(20px) scale(1.1);
-    }
-    70% {
-        transform: rotate(-280deg) translateZ(10px) scale(1.05);
-    }
-    100% {
-        transform: rotate(-360deg) translateZ(0);
-    }
+.toggle-slider-icon.fa-music {
+    font-size: 14px;
+    color: var(--primary-color);
+    animation: float-note 3s infinite ease-in-out;
 }
 
-@keyframes float {
-    0% {
-        transform: translateY(0) rotate(0deg);
+@keyframes subtle-rotate {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+}
+
+@keyframes float-note {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+}
+
+[data-theme="dark"] .toggle-slider-icon {
+    color: var(--secondary-color);
+}
+
+/* Vinyl Record Styles */
+.vinyl-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.4;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.vinyl-record {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #111;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: scale(0.7) translateY(5px);
+    transition: transform 0.5s ease;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="light"] .vinyl-record {
+    background: #222;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.vinyl-record.spinning {
+    animation: spin 1.5s linear;
+}
+
+.vinyl-groove {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    width: calc(100% - (var(--groove-index) * 10px));
+    height: calc(100% - (var(--groove-index) * 10px));
+    top: calc(var(--groove-index) * 5px);
+    left: calc(var(--groove-index) * 5px);
+}
+
+.vinyl-label {
+    width: 40%;
+    height: 40%;
+    border-radius: 50%;
+    background: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    background-image: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+}
+
+[data-theme="light"] .vinyl-label {
+    background-image: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+}
+
+.vinyl-hole {
+    width: 15%;
+    height: 15%;
+    border-radius: 50%;
+    background: #000;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+@keyframes spin {
+    0% { transform: scale(0.7) translateY(5px) rotate(0deg); }
+    100% { transform: scale(0.7) translateY(5px) rotate(360deg); }
+}
+
+/* Animations */
+@keyframes pulse-out {
+    0% { opacity: 0.5; transform: scale(0); }
+    50% { opacity: 0.3; transform: scale(1.5); }
+    100% { opacity: 0; transform: scale(2); }
+}
+
+/* Hover effects */
+.theme-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
     }
-    50% {
-        transform: translateY(-5px) rotate(3deg);
-    }
-    100% {
-        transform: translateY(0) rotate(0deg);
-    }
+
+.theme-toggle:hover .vinyl-record {
+    transform: scale(0.75) translateY(3px);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+@keyframes icon-pulse {
+    0%, 100% { transform: scale(1.2); }
+    50% { transform: scale(1.3); }
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .theme-toggle {
         top: 15px;
-        right: 70px;
-        width: 40px;
-        height: 40px;
+        right: 15px;
+        width: 60px;
+        height: 34px;
+    }
+    
+    .toggle-slider {
+        width: 26px;
+        height: 26px;
+    }
+    
+    [data-theme="light"] .toggle-slider {
+        left: calc(100% - 30px);
+    }
+    
+    .theme-icon {
+        font-size: 12px;
+    }
+    
+    .toggle-slider-icon {
+        font-size: 10px;
+    }
+    
+    .vinyl-record {
+        transform: scale(0.6) translateY(5px);
+    }
+    
+    .theme-toggle:hover .vinyl-record {
+        transform: scale(0.65) translateY(3px);
     }
 } 

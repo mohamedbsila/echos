@@ -1,12 +1,15 @@
 /**
- * Theme Toggle - DJ Disk Style
- * Toggles between dark and light mode themes
+ * Theme Toggle - Vinyl Style
+ * A creative theme toggle that uses vinyl record visualization
  */
 class ThemeToggle {
     constructor() {
         this.body = document.body;
         this.themeToggle = null;
         this.currentTheme = localStorage.getItem('theme') || 'dark';
+        this.vinylRecord = null;
+        this.vinylGrooves = [];
+        this.numGrooves = 5;
         
         this.init();
     }
@@ -27,35 +30,79 @@ class ThemeToggle {
         const toggleContainer = document.createElement('div');
         toggleContainer.className = 'theme-toggle';
         
-        // Create DJ disk
-        const djDisk = document.createElement('div');
-        djDisk.className = 'dj-disk-toggle';
+        // Create slider knob
+        const toggleSlider = document.createElement('div');
+        toggleSlider.className = 'toggle-slider';
         
-        // Create vinyl texture
-        const vinylTexture = document.createElement('div');
-        vinylTexture.className = 'vinyl-texture';
+        // Add icon to slider
+        const sliderIcon = document.createElement('i');
+        sliderIcon.className = 'toggle-slider-icon fas';
+        sliderIcon.classList.add(this.currentTheme === 'dark' ? 'fa-headphones' : 'fa-music');
+        toggleSlider.appendChild(sliderIcon);
         
-        // Create icon
-        const icon = document.createElement('i');
-        icon.className = 'theme-icon fas';
-        icon.classList.add(this.currentTheme === 'dark' ? 'fa-moon' : 'fa-sun');
+        // Create theme icons container
+        const themeIconContainer = document.createElement('div');
+        themeIconContainer.className = 'theme-icon-container';
         
-        // Create label text
-        const labelText = document.createElement('div');
-        labelText.className = 'label-text';
-        labelText.textContent = this.currentTheme === 'dark' ? 'NIGHT' : 'DAY';
+        // Create headphones icon (dark theme)
+        const headphonesIcon = document.createElement('i');
+        headphonesIcon.className = 'theme-icon fas fa-headphones';
+        if (this.currentTheme === 'dark') headphonesIcon.classList.add('active');
+        
+        // Create music note icon (light theme)
+        const musicIcon = document.createElement('i');
+        musicIcon.className = 'theme-icon fas fa-music';
+        if (this.currentTheme === 'light') musicIcon.classList.add('active');
+        
+        // Add icons to container
+        themeIconContainer.appendChild(headphonesIcon);
+        themeIconContainer.appendChild(musicIcon);
+        
+        // Create vinyl record visualization
+        const vinylContainer = document.createElement('div');
+        vinylContainer.className = 'vinyl-container';
+        
+        // Create vinyl record
+        const vinylRecord = document.createElement('div');
+        vinylRecord.className = 'vinyl-record';
+        
+        // Create vinyl grooves
+        for (let i = 0; i < this.numGrooves; i++) {
+            const groove = document.createElement('div');
+            groove.className = 'vinyl-groove';
+            groove.style.setProperty('--groove-index', i);
+            this.vinylGrooves.push(groove);
+            vinylRecord.appendChild(groove);
+        }
+        
+        // Create vinyl label
+        const vinylLabel = document.createElement('div');
+        vinylLabel.className = 'vinyl-label';
+        
+        // Create vinyl center hole
+        const vinylHole = document.createElement('div');
+        vinylHole.className = 'vinyl-hole';
+        
+        // Assemble vinyl
+        vinylLabel.appendChild(vinylHole);
+        vinylRecord.appendChild(vinylLabel);
+        vinylContainer.appendChild(vinylRecord);
+        
+        // Store reference to vinyl
+        this.vinylRecord = vinylRecord;
         
         // Append elements
-        djDisk.appendChild(vinylTexture);
-        djDisk.appendChild(icon);
-        djDisk.appendChild(labelText);
-        toggleContainer.appendChild(djDisk);
+        toggleContainer.appendChild(toggleSlider);
+        toggleContainer.appendChild(themeIconContainer);
+        toggleContainer.appendChild(vinylContainer);
         document.body.appendChild(toggleContainer);
         
         // Store reference
         this.themeToggle = toggleContainer;
-        this.themeIcon = icon;
-        this.labelText = labelText;
+        this.toggleSlider = toggleSlider;
+        this.sliderIcon = sliderIcon;
+        this.headphonesIcon = headphonesIcon;
+        this.musicIcon = musicIcon;
     }
     
     addEventListeners() {
@@ -66,17 +113,13 @@ class ThemeToggle {
             // Add active class for animation
             this.themeToggle.classList.add('active');
             
-            // Add direction class based on theme change
-            if (newTheme === 'light') {
-                this.themeToggle.classList.add('rotate-right');
-                this.themeToggle.classList.remove('rotate-left');
-            } else {
-                this.themeToggle.classList.add('rotate-left');
-                this.themeToggle.classList.remove('rotate-right');
+            // Animate vinyl record
+            if (this.vinylRecord) {
+                this.vinylRecord.classList.add('spinning');
+                setTimeout(() => {
+                    this.vinylRecord.classList.remove('spinning');
+                }, 1500);
             }
-            
-            // Create vinyl scratch sound
-            this.playVinylScratchSound();
             
             // Apply new theme after animation
             setTimeout(() => {
@@ -86,55 +129,25 @@ class ThemeToggle {
         });
     }
     
-    playVinylScratchSound() {
-        // Create audio context
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        if (!AudioContext) return;
-        
-        const audioCtx = new AudioContext();
-        
-        // Create oscillator for scratch sound
-        const oscillator = audioCtx.createOscillator();
-        const gainNode = audioCtx.createGain();
-        
-        // Connect nodes
-        oscillator.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-        
-        // Set parameters for vinyl scratch sound
-        oscillator.type = 'sawtooth';
-        oscillator.frequency.setValueAtTime(120, audioCtx.currentTime);
-        oscillator.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.2);
-        
-        // Volume envelope
-        gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-        gainNode.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + 0.02);
-        gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.2);
-        
-        // Play and stop
-        oscillator.start();
-        oscillator.stop(audioCtx.currentTime + 0.2);
-    }
-    
     applyTheme(theme) {
         // Update data attribute
         this.body.setAttribute('data-theme', theme);
         
-        // Update icon
-        if (this.themeIcon) {
-            this.themeIcon.className = 'theme-icon fas';
-            this.themeIcon.classList.add(theme === 'dark' ? 'fa-moon' : 'fa-sun');
+        // Update slider icon
+        if (this.sliderIcon) {
+            this.sliderIcon.className = 'toggle-slider-icon fas';
+            this.sliderIcon.classList.add(theme === 'dark' ? 'fa-headphones' : 'fa-music');
         }
         
-        // Update label text
-        if (this.labelText) {
-            this.labelText.textContent = theme === 'dark' ? 'NIGHT' : 'DAY';
-            
-            // Add animation class
-            this.labelText.classList.add('text-change');
-            setTimeout(() => {
-                this.labelText.classList.remove('text-change');
-            }, 500);
+        // Update theme icons
+        if (this.headphonesIcon && this.musicIcon) {
+            if (theme === 'dark') {
+                this.headphonesIcon.classList.add('active');
+                this.musicIcon.classList.remove('active');
+            } else {
+                this.headphonesIcon.classList.remove('active');
+                this.musicIcon.classList.add('active');
+            }
         }
         
         // Save to localStorage
