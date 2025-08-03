@@ -3089,3 +3089,467 @@ img {
     from, to { border-color: transparent; }
     50% { border-color: var(--primary-color); }
 }
+
+/* Mobile Logo Container Animation - Same as PC mobile-title */
+.mobile-logo-container {
+    animation: logo-heartbeat 2s infinite;
+    transform-origin: center;
+}
+
+@keyframes logo-heartbeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Mobile Title Animation - Same as PC */
+.mobile-title {
+    animation: mobile-title-float 3s ease-in-out infinite;
+    text-shadow: 0 0 20px rgba(108, 68, 252, 0.8);
+}
+
+@keyframes mobile-title-float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Mobile Sidebar Improvements */
+.mobile-sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.mobile-sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mobile-nav .nav-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    height: 100vh;
+    background: var(--bg-color);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-left: 1px solid var(--border-color);
+    z-index: 1000;
+    transition: right 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.mobile-nav .nav-menu.active {
+    right: 0;
+}
+
+/* Mobile Sidebar Options */
+.mobile-sidebar-options {
+    margin: 30px 0;
+    padding: 20px 0;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.mobile-option-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-option-item:last-child {
+    border-bottom: none;
+}
+
+.mobile-option-item span {
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+/* Theme Toggle Styles */
+.mobile-theme-toggle {
+    position: relative;
+    width: 50px;
+    height: 25px;
+}
+
+.theme-switch {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.theme-label {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #333;
+    border-radius: 25px;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5px;
+}
+
+.theme-label:before {
+    position: absolute;
+    content: "";
+    height: 19px;
+    width: 19px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.theme-switch:checked + .theme-label {
+    background-color: var(--primary-color);
+}
+
+.theme-switch:checked + .theme-label:before {
+    transform: translateX(25px);
+}
+
+.theme-label i {
+    color: white;
+    font-size: 12px;
+    z-index: 1;
+}
+
+/* Sound and Animation Toggles */
+.sound-toggle, .animation-toggle {
+    position: relative;
+    width: 50px;
+    height: 25px;
+}
+
+.sound-switch, .animation-switch {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.sound-label, .animation-label {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--primary-color);
+    border-radius: 25px;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5px;
+}
+
+.sound-label:before, .animation-label:before {
+    position: absolute;
+    content: "";
+    height: 19px;
+    width: 19px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.sound-switch:not(:checked) + .sound-label,
+.animation-switch:not(:checked) + .animation-label {
+    background-color: #333;
+}
+
+.sound-switch:not(:checked) + .sound-label:before,
+.animation-switch:not(:checked) + .animation-label:before {
+    transform: translateX(25px);
+}
+
+.sound-label i, .animation-label i {
+    color: white;
+    font-size: 12px;
+    z-index: 1;
+}
+
+/* Music Control Inner - Mobile Compatible */
+.music-control-inner {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 30px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.music-control-inner.expanded {
+    height: 60px;
+    gap: 5px;
+}
+
+.music-control-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: inherit;
+    height: 100%;
+}
+
+.control-bar {
+    width: 3px;
+    background: linear-gradient(to top, var(--primary-color), var(--secondary-color));
+    border-radius: 3px 3px 0 0;
+    animation: control-bar-animation 1.2s infinite ease-in-out;
+    transition: all 0.3s ease;
+}
+
+.music-control-inner.expanded .control-bar {
+    width: 6px;
+    border-radius: 6px 6px 0 0;
+}
+
+.control-bar:nth-child(1) { animation-delay: 0.0s; height: 60%; }
+.control-bar:nth-child(2) { animation-delay: 0.1s; height: 80%; }
+.control-bar:nth-child(3) { animation-delay: 0.2s; height: 40%; }
+.control-bar:nth-child(4) { animation-delay: 0.3s; height: 90%; }
+.control-bar:nth-child(5) { animation-delay: 0.4s; height: 70%; }
+.control-bar:nth-child(6) { animation-delay: 0.5s; height: 50%; }
+.control-bar:nth-child(7) { animation-delay: 0.6s; height: 85%; }
+.control-bar:nth-child(8) { animation-delay: 0.7s; height: 65%; }
+
+@keyframes control-bar-animation {
+    0%, 100% {
+        opacity: 0.5;
+        transform: scaleY(0.8);
+    }
+    50% {
+        opacity: 1;
+        transform: scaleY(1.2);
+    }
+}
+
+/* Remove hero cards styles */
+.mobile-hero-cards {
+    display: none;
+}
+
+.mobile-card {
+    display: none;
+}
+
+/* Mobile Sidebar Header Improvements */
+.mobile-sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+.mobile-sidebar-header h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.mobile-sidebar-close {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.mobile-sidebar-close:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: scale(1.1);
+}
+
+/* Mobile Sidebar Footer Improvements */
+.mobile-sidebar-footer {
+    margin-top: auto;
+    padding: 20px 0;
+    border-top: 1px solid var(--border-color);
+}
+
+.mobile-sidebar-social {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.mobile-sidebar-social a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+}
+
+.mobile-sidebar-social a:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(108, 68, 252, 0.5);
+}
+
+/* Mobile Nav Menu Items */
+.mobile-nav .nav-menu li {
+    margin: 10px 0;
+}
+
+.mobile-nav .nav-link {
+    display: block;
+    padding: 15px 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-nav .nav-link:hover,
+.mobile-nav .nav-link.active {
+    color: var(--primary-color);
+    padding-left: 10px;
+    border-bottom-color: var(--primary-color);
+}
+
+/* Mobile Logo Container Additional Styles */
+.mobile-logo-container img {
+    transition: all 0.3s ease;
+}
+
+.mobile-logo-container:hover img {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 10px rgba(108, 68, 252, 0.5));
+}
+
+/* Music Control Inner Additional Mobile Styles */
+@media (max-width: 768px) {
+    .music-control-inner {
+        bottom: 30px;
+        height: 25px;
+    }
+    
+    .music-control-inner.expanded {
+        height: 50px;
+    }
+    
+    .control-bar {
+        width: 2px;
+    }
+    
+    .music-control-inner.expanded .control-bar {
+        width: 4px;
+    }
+}
+
+/* Mobile Title Additional Animation */
+.mobile-title {
+    position: relative;
+    overflow: hidden;
+}
+
+.mobile-title::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(108, 68, 252, 0.3), transparent);
+    animation: title-shine 3s infinite;
+}
+
+@keyframes title-shine {
+    0% {
+        left: -100%;
+    }
+    50% {
+        left: 100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+/* Mobile Sidebar Animation Improvements */
+.mobile-nav .nav-menu {
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobile-nav .nav-menu.active {
+    transform: translateX(0);
+}
+
+/* Mobile Sidebar Overlay Improvements */
+.mobile-sidebar-overlay {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.6);
+}
+
+/* Mobile Option Item Hover Effects */
+.mobile-option-item {
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    margin: 5px 0;
+}
+
+.mobile-option-item:hover {
+    background: rgba(108, 68, 252, 0.1);
+    transform: translateX(5px);
+}
+
+/* Theme Toggle Hover Effects */
+.theme-label:hover {
+    transform: scale(1.05);
+}
+
+.sound-label:hover,
+.animation-label:hover {
+    transform: scale(1.05);
+}

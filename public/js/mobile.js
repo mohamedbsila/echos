@@ -57,6 +57,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // Mobile Sidebar Options Functionality
+    initializeMobileSidebarOptions();
+    
+    // Music Control Inner Touch Functionality
+    initializeMusicControlInner();
+    
     // Mobile music player controls
     const playBtn = document.querySelector('.play-btn');
     const progressFill = document.querySelector('.progress-fill');
@@ -374,3 +380,134 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// Initialize Mobile Sidebar Options
+function initializeMobileSidebarOptions() {
+    // Theme Toggle
+    const themeSwitch = document.getElementById('mobile-theme-switch');
+    if (themeSwitch) {
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            themeSwitch.checked = savedTheme === 'light';
+        }
+        
+        themeSwitch.addEventListener('change', function() {
+            const newTheme = this.checked ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Add transition effect
+            document.body.style.transition = 'background-color 0.3s ease, color 0.3s ease';
+            setTimeout(() => {
+                document.body.style.transition = '';
+            }, 300);
+        });
+    }
+    
+    // Sound Effects Toggle
+    const soundSwitch = document.getElementById('mobile-sound-switch');
+    if (soundSwitch) {
+        soundSwitch.addEventListener('change', function() {
+            const isSoundEnabled = this.checked;
+            localStorage.setItem('soundEnabled', isSoundEnabled);
+            
+            // You can add sound effect logic here
+            if (isSoundEnabled) {
+                console.log('Sound effects enabled');
+            } else {
+                console.log('Sound effects disabled');
+            }
+        });
+    }
+    
+    // Animations Toggle
+    const animationSwitch = document.getElementById('mobile-animation-switch');
+    if (animationSwitch) {
+        animationSwitch.addEventListener('change', function() {
+            const isAnimationEnabled = this.checked;
+            localStorage.setItem('animationEnabled', isAnimationEnabled);
+            
+            // Toggle animations
+            const animatedElements = document.querySelectorAll('.particle, .wave, .ripple, .control-bar');
+            animatedElements.forEach(element => {
+                if (isAnimationEnabled) {
+                    element.style.animationPlayState = 'running';
+                } else {
+                    element.style.animationPlayState = 'paused';
+                }
+            });
+        });
+    }
+}
+
+// Initialize Music Control Inner Touch Functionality
+function initializeMusicControlInner() {
+    const musicControlInner = document.querySelector('.music-control-inner');
+    if (!musicControlInner) return;
+    
+    let expandTimeout;
+    let isExpanded = false;
+    
+    // Touch/Click to expand
+    musicControlInner.addEventListener('click', function() {
+        if (!isExpanded) {
+            expandMusicControl();
+        }
+    });
+    
+    // Touch/Click to collapse
+    musicControlInner.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        if (isExpanded) {
+            collapseMusicControl();
+        }
+    });
+    
+    function expandMusicControl() {
+        isExpanded = true;
+        musicControlInner.classList.add('expanded');
+        
+        // Clear any existing timeout
+        if (expandTimeout) {
+            clearTimeout(expandTimeout);
+        }
+        
+        // Auto-collapse after 3 seconds
+        expandTimeout = setTimeout(() => {
+            collapseMusicControl();
+        }, 3000);
+    }
+    
+    function collapseMusicControl() {
+        isExpanded = false;
+        musicControlInner.classList.remove('expanded');
+        
+        if (expandTimeout) {
+            clearTimeout(expandTimeout);
+        }
+    }
+    
+    // Add hover effect for desktop
+    musicControlInner.addEventListener('mouseenter', function() {
+        if (!isExpanded) {
+            expandMusicControl();
+        }
+    });
+    
+    musicControlInner.addEventListener('mouseleave', function() {
+        if (isExpanded) {
+            collapseMusicControl();
+        }
+    });
+    
+    // Add touch feedback
+    musicControlInner.addEventListener('touchstart', function() {
+        this.style.transform = 'translateX(-50%) scale(1.1)';
+    });
+    
+    musicControlInner.addEventListener('touchend', function() {
+        this.style.transform = 'translateX(-50%) scale(1)';
+    });
+}

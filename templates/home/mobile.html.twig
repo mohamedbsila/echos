@@ -10,7 +10,7 @@
     <!-- Mobile Navigation -->
     <nav class="navbar mobile-nav">
         <div class="container">
-            <div class="logo">
+            <div class="logo mobile-logo-container">
                 <a href="">
                     <img src="{{ asset('img/logo/echos-logo.png') }}" alt="ECHOS" class="logo-image">
                 </a>
@@ -32,6 +32,41 @@
                 <li><a href="#gallery" class="nav-link">Gallery</a></li>
                 <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
+                
+                <!-- Mobile Sidebar Options -->
+                <div class="mobile-sidebar-options">
+                    <div class="mobile-option-item">
+                        <span>Dark Mode</span>
+                        <div class="theme-toggle mobile-theme-toggle">
+                            <input type="checkbox" id="mobile-theme-switch" class="theme-switch">
+                            <label for="mobile-theme-switch" class="theme-label">
+                                <i class="fas fa-sun"></i>
+                                <i class="fas fa-moon"></i>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mobile-option-item">
+                        <span>Sound Effects</span>
+                        <div class="sound-toggle">
+                            <input type="checkbox" id="mobile-sound-switch" class="sound-switch" checked>
+                            <label for="mobile-sound-switch" class="sound-label">
+                                <i class="fas fa-volume-up"></i>
+                                <i class="fas fa-volume-mute"></i>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mobile-option-item">
+                        <span>Animations</span>
+                        <div class="animation-toggle">
+                            <input type="checkbox" id="mobile-animation-switch" class="animation-switch" checked>
+                            <label for="mobile-animation-switch" class="animation-label">
+                                <i class="fas fa-play"></i>
+                                <i class="fas fa-pause"></i>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="mobile-sidebar-footer">
                     <div class="mobile-sidebar-social">
                         <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -49,10 +84,10 @@
         <div class="container">
             <div class="hero-content">
                 <div class="text-3d-container">
-                    <h1 class="glitch text-3d" data-text="ECHOS">ECHOS</h1>
+                    <h1 class="glitch text-3d mobile-title" data-text="ECHOS">ECHOS</h1>
                 </div>
                 <div class="typing-container">
-                    <h2 class="typing-text">Music Producer & Rapper</h2>
+                    <h2 class="typing-text">Music Producer &</h2>
                 </div>
                 <p class="fade-in">Creating beats that move the soul</p>
                 <div class="hero-buttons">
@@ -100,7 +135,19 @@
             <div class="ripple"></div>
         </div>
         
-        <!-- Sound wave and beat ripples will be inserted here by JS -->
+        <!-- Music Control Inner -->
+        <div class="music-control-inner">
+            <div class="music-control-bars">
+                <div class="control-bar"></div>
+                <div class="control-bar"></div>
+                <div class="control-bar"></div>
+                <div class="control-bar"></div>
+                <div class="control-bar"></div>
+                <div class="control-bar"></div>
+                <div class="control-bar"></div>
+                <div class="control-bar"></div>
+            </div>
+        </div>
     </section>
 
     <!-- Mobile Music Section -->

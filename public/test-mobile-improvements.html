@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Improvements Test - ECHOS</title>
+    <link rel="stylesheet" href="css/preloader.css">
+    <link rel="stylesheet" href="css/sound-wave.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/theme-toggle.css">
+    <link rel="stylesheet" href="css/logo-heartbeat.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Test Mobile Navigation -->
+    <nav class="navbar mobile-nav">
+        <div class="container">
+            <div class="logo mobile-logo-container">
+                <a href="">
+                    <img src="img/logo/echos-logo.png" alt="ECHOS" class="logo-image">
+                </a>
+            </div>
+            <div class="menu-btn">
+                <div class="menu-btn__burger"></div>
+            </div>
+            <ul class="nav-menu">
+                <div class="mobile-sidebar-header">
+                    <h3>ECHOS</h3>
+                    <button class="mobile-sidebar-close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#music" class="nav-link">Music</a></li>
+                <li><a href="#tour" class="nav-link">Tour</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#gallery" class="nav-link">Gallery</a></li>
+                <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+                
+                <!-- Mobile Sidebar Options -->
+                <div class="mobile-sidebar-options">
+                    <div class="mobile-option-item">
+                        <span>Dark Mode</span>
+                        <div class="theme-toggle mobile-theme-toggle">
+                            <input type="checkbox" id="mobile-theme-switch" class="theme-switch">
+                            <label for="mobile-theme-switch" class="theme-label">
+                                <i class="fas fa-sun"></i>
+                                <i class="fas fa-moon"></i>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mobile-option-item">
+                        <span>Sound Effects</span>
+                        <div class="sound-toggle">
+                            <input type="checkbox" id="mobile-sound-switch" class="sound-switch" checked>
+                            <label for="mobile-sound-switch" class="sound-label">
+                                <i class="fas fa-volume-up"></i>
+                                <i class="fas fa-volume-mute"></i>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mobile-option-item">
+                        <span>Animations</span>
+                        <div class="animation-toggle">
+                            <input type="checkbox" id="mobile-animation-switch" class="animation-switch" checked>
+                            <label for="mobile-animation-switch" class="animation-label">
+                                <i class="fas fa-play"></i>
+                                <i class="fas fa-pause"></i>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mobile-sidebar-footer">
+                    <div class="mobile-sidebar-social">
+                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Mobile Sidebar Overlay -->
+    <div class="mobile-sidebar-overlay"></div>
+
+    <!-- Test Mobile Hero Section -->
+    <section id="home" class="hero mobile-hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="text-3d-container">
+                    <h1 class="glitch text-3d mobile-title" data-text="ECHOS">ECHOS</h1>
+                </div>
+                <div class="typing-container">
+                    <h2 class="typing-text">Music Producer &</h2>
+                </div>
+                <p class="fade-in">Creating beats that move the soul</p>
+                <div class="hero-buttons">
+                    <a href="#music" class="btn btn-primary pulse">Listen Now</a>
+                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Music Control Inner -->
+        <div class="music-control-inner">
+            <div class="music-control-bars">
+                <div class="control-bar"></div>
+                <div class="control-bar"></div>
+                <div class="control-bar"></div>
+                <div class="control-bar"></div>
+                <div class="control-bar"></div>
+                <div class="control-bar"></div>
+                <div class="control-bar"></div>
+                <div class="control-bar"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Test Content -->
+    <div style="height: 200vh; padding: 100px 20px; text-align: center;">
+        <h2>Mobile Improvements Test</h2>
+        <p>Scroll down to test the mobile navigation and other features.</p>
+        <p>Click the menu button to test the sidebar.</p>
+        <p>Touch the music control bars at the bottom to test expansion.</p>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/preloader.js"></script>
+    <script src="js/mobile.js"></script>
+    
+    <script>
+        // Test script to verify functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Mobile improvements test loaded successfully!');
+            
+            // Test theme toggle
+            const themeSwitch = document.getElementById('mobile-theme-switch');
+            if (themeSwitch) {
+                console.log('Theme toggle found and working');
+            }
+            
+            // Test music control inner
+            const musicControl = document.querySelector('.music-control-inner');
+            if (musicControl) {
+                console.log('Music control inner found and working');
+            }
+            
+            // Test sidebar
+            const sidebar = document.querySelector('.nav-menu');
+            if (sidebar) {
+                console.log('Mobile sidebar found and working');
+            }
+        });
+    </script>
+</body>
+</html>
