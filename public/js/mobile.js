@@ -1,15 +1,39 @@
 // Mobile-specific JavaScript for Echos website
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Mobile navigation toggle
+    // Mobile navigation toggle with sidebar
     const menuBtn = document.querySelector('.menu-btn');
     const navMenu = document.querySelector('.nav-menu');
+    const sidebarOverlay = document.querySelector('.mobile-sidebar-overlay');
+    const sidebarClose = document.querySelector('.mobile-sidebar-close');
     
     if (menuBtn && navMenu) {
         menuBtn.addEventListener('click', function() {
             navMenu.classList.toggle('active');
             menuBtn.classList.toggle('active');
+            sidebarOverlay.classList.toggle('active');
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
         });
+        
+        // Close sidebar when clicking overlay
+        if (sidebarOverlay) {
+            sidebarOverlay.addEventListener('click', function() {
+                navMenu.classList.remove('active');
+                menuBtn.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        }
+        
+        // Close sidebar when clicking close button
+        if (sidebarClose) {
+            sidebarClose.addEventListener('click', function() {
+                navMenu.classList.remove('active');
+                menuBtn.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        }
         
         // Close menu when clicking on a link
         const navLinks = document.querySelectorAll('.nav-link');
@@ -17,7 +41,19 @@ document.addEventListener('DOMContentLoaded', function() {
             link.addEventListener('click', function() {
                 navMenu.classList.remove('active');
                 menuBtn.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+                document.body.style.overflow = '';
             });
+        });
+        
+        // Close sidebar on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                menuBtn.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
         });
     }
     

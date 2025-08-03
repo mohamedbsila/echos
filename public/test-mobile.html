@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECHOS - Mobile Test</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/theme-toggle.css">
+    <link rel="stylesheet" href="css/logo-heartbeat.css">
+    <link rel="stylesheet" href="css/sound-wave.css">
+    <link rel="stylesheet" href="css/preloader.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+
+    <!-- Mobile Sidebar Overlay -->
+    <div class="mobile-sidebar-overlay"></div>
+
+    <!-- Mobile Navigation -->
+    <nav class="navbar mobile-nav">
+        <div class="container">
+            <div class="logo">
+                <a href="">
+                    <h1>ECHOS</h1>
+                </a>
+            </div>
+            <div class="menu-btn">
+                <div class="menu-btn__burger"></div>
+            </div>
+            <ul class="nav-menu">
+                <div class="mobile-sidebar-header">
+                    <h3>ECHOS</h3>
+                    <button class="mobile-sidebar-close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#music" class="nav-link">Music</a></li>
+                <li><a href="#tour" class="nav-link">Tour</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#gallery" class="nav-link">Gallery</a></li>
+                <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <div class="mobile-sidebar-footer">
+                    <div class="mobile-sidebar-social">
+                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Mobile Hero Section -->
+    <section id="home" class="hero mobile-hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="text-3d-container">
+                    <h1 class="glitch text-3d" data-text="ECHOS">ECHOS</h1>
+                </div>
+                <div class="typing-container">
+                    <h2 class="typing-text">Music Producer & Rapper</h2>
+                </div>
+                <p class="fade-in">Creating beats that move the soul</p>
+                <div class="hero-buttons">
+                    <a href="#music" class="btn btn-primary pulse">Listen Now</a>
+                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                </div>
+            </div>
+        </div>
+        <div class="hero-overlay"></div>
+        
+        <!-- Enhanced Visual Effects -->
+        <div class="particle-container">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        
+        <div class="sound-waves">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+        </div>
+        
+        <div class="beat-ripples">
+            <div class="ripple"></div>
+            <div class="ripple"></div>
+            <div class="ripple"></div>
+        </div>
+    </section>
+
+    <!-- Mobile Music Section -->
+    <section id="music" class="music-section mobile-music">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="neon-text">Latest Tracks</h2>
+                <p>Check out my newest releases</p>
+            </div>
+            
+            <div class="mobile-music-player">
+                <div class="mobile-track-art">
+                    <div class="vinyl-animation"></div>
+                </div>
+                <div class="mobile-track-info">
+                    <h3>Echos - JID Type Beat</h3>
+                    <p>Latest Release</p>
+                </div>
+                <div class="mobile-player-controls">
+                    <button class="control-btn play-btn">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button class="control-btn">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
+                <div class="mobile-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <div class="time-display">
+                        <span class="current-time">0:00</span>
+                        <span class="total-time">2:11</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/mobile.js"></script>
+    <script>
+        // Test the mobile sidebar functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Mobile test page loaded');
+            
+            // Test menu button click
+            const menuBtn = document.querySelector('.menu-btn');
+            if (menuBtn) {
+                console.log('Menu button found');
+            }
+            
+            // Test sidebar overlay
+            const overlay = document.querySelector('.mobile-sidebar-overlay');
+            if (overlay) {
+                console.log('Sidebar overlay found');
+            }
+        });
+    </script>
+</body>
+</html>

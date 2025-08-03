@@ -34,14 +34,32 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize 3D text effect
     initText3D();
 
-    // Navbar Scroll Effect
+    // Navbar Scroll Effect - Enhanced for PC mode
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
         }
+        
+        // Ensure navbar is always visible on PC
+        if (window.innerWidth > 768) {
+            navbar.style.position = 'fixed';
+            navbar.style.top = '0';
+            navbar.style.left = '0';
+            navbar.style.width = '100%';
+            navbar.style.zIndex = '1000';
+        }
     });
+    
+    // Initialize navbar position for PC
+    if (window.innerWidth > 768) {
+        navbar.style.position = 'fixed';
+        navbar.style.top = '0';
+        navbar.style.left = '0';
+        navbar.style.width = '100%';
+        navbar.style.zIndex = '1000';
+    }
 
     // Mobile Menu Toggle with enhanced animation
     let menuOpen = false;
