@@ -1,0 +1,395 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+
+    <!-- Mobile Navigation -->
+    <nav class="navbar mobile-nav">
+        <div class="container">
+            <div class="logo">
+                <a href="">
+                    <img src="{{ asset('img/logo/echos-logo.png') }}" alt="ECHOS" class="logo-image">
+                </a>
+            </div>
+            <div class="menu-btn">
+                <div class="menu-btn__burger"></div>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#music" class="nav-link">Music</a></li>
+                <li><a href="#tour" class="nav-link">Tour</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#gallery" class="nav-link">Gallery</a></li>
+                <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Mobile Hero Section -->
+    <section id="home" class="hero mobile-hero">
+        <div class="container">
+            <div class="mobile-hero-content">
+                <div class="mobile-logo-container">
+                    <div class="mobile-logo-glow"></div>
+                    <h1 class="mobile-title">ECHOS</h1>
+                    <div class="mobile-subtitle">Music Producer & Rapper</div>
+                </div>
+                
+                <div class="mobile-hero-cards">
+                    <div class="mobile-card music-card">
+                        <div class="card-icon">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <h3>Latest Tracks</h3>
+                        <p>Listen to my newest releases</p>
+                        <a href="#music" class="mobile-card-btn">Listen Now</a>
+                    </div>
+                    
+                    <div class="mobile-card tour-card">
+                        <div class="card-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h3>Tour Dates</h3>
+                        <p>See me live in concert</p>
+                        <a href="#tour" class="mobile-card-btn">View Dates</a>
+                    </div>
+                    
+                    <div class="mobile-card contact-card">
+                        <div class="card-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3>Get In Touch</h3>
+                        <p>Bookings & collaborations</p>
+                        <a href="#contact" class="mobile-card-btn">Contact</a>
+                    </div>
+                </div>
+                
+                <div class="mobile-social-links">
+                    <a href="#" class="social-link"><i class="fab fa-spotify"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="hero-overlay"></div>
+    </section>
+
+    <!-- Mobile Music Section -->
+    <section id="music" class="music-section mobile-music">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="neon-text">Latest Tracks</h2>
+                <p>Check out my newest releases</p>
+            </div>
+            
+            <div class="mobile-music-player">
+                <div class="mobile-track-art">
+                    <div class="vinyl-animation"></div>
+                </div>
+                <div class="mobile-track-info">
+                    <h3>Track Name</h3>
+                    <p>Yassin DJ</p>
+                </div>
+                <div class="mobile-player-controls">
+                    <button class="control-btn"><i class="fas fa-step-backward"></i></button>
+                    <button class="control-btn play-btn"><i class="fas fa-play"></i></button>
+                    <button class="control-btn"><i class="fas fa-step-forward"></i></button>
+                </div>
+                <div class="mobile-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <div class="time-display">
+                        <span class="current-time">0:00</span>
+                        <span class="total-time">3:45</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mobile-track-list">
+                <div class="mobile-track-item active">
+                    <div class="track-number">01</div>
+                    <div class="track-details">
+                        <h4>Track Name 1</h4>
+                        <p>Album Name</p>
+                    </div>
+                    <div class="track-duration">3:45</div>
+                </div>
+                <div class="mobile-track-item">
+                    <div class="track-number">02</div>
+                    <div class="track-details">
+                        <h4>Track Name 2</h4>
+                        <p>Album Name</p>
+                    </div>
+                    <div class="track-duration">4:20</div>
+                </div>
+                <div class="mobile-track-item">
+                    <div class="track-number">03</div>
+                    <div class="track-details">
+                        <h4>Track Name 3</h4>
+                        <p>Album Name</p>
+                    </div>
+                    <div class="track-duration">3:15</div>
+                </div>
+            </div>
+            
+            <div class="mobile-streaming-links">
+                <h3>Listen On</h3>
+                <div class="mobile-platforms">
+                    <a href="#" class="platform-link"><i class="fab fa-spotify"></i> Spotify</a>
+                    <a href="#" class="platform-link"><i class="fab fa-apple"></i> Apple Music</a>
+                    <a href="#" class="platform-link"><i class="fab fa-youtube"></i> YouTube</a>
+                    <a href="#" class="platform-link"><i class="fab fa-soundcloud"></i> SoundCloud</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mobile Tour Section -->
+    <section id="tour" class="tour-dates mobile-tour">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="neon-text">Tour Dates</h2>
+                <p>Catch me live at these upcoming events</p>
+            </div>
+            
+            <div class="mobile-tour-cards">
+                <div class="mobile-tour-card">
+                    <div class="tour-date-badge">
+                        <span class="month">DEC</span>
+                        <span class="day">15</span>
+                    </div>
+                    <div class="tour-info">
+                        <h3>Club Horizon</h3>
+                        <p>Los Angeles, CA</p>
+                        <a href="#" class="tour-ticket-btn">Get Tickets</a>
+                    </div>
+                </div>
+                
+                <div class="mobile-tour-card">
+                    <div class="tour-date-badge">
+                        <span class="month">DEC</span>
+                        <span class="day">22</span>
+                    </div>
+                    <div class="tour-info">
+                        <h3>Electric Room</h3>
+                        <p>New York, NY</p>
+                        <a href="#" class="tour-ticket-btn">Get Tickets</a>
+                    </div>
+                </div>
+                
+                <div class="mobile-tour-card">
+                    <div class="tour-date-badge">
+                        <span class="month">JAN</span>
+                        <span class="day">05</span>
+                    </div>
+                    <div class="tour-info">
+                        <h3>Pulse Nightclub</h3>
+                        <p>Miami, FL</p>
+                        <a href="#" class="tour-ticket-btn">Get Tickets</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mobile About Section -->
+    <section id="about" class="about-section mobile-about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="neon-text">About Yassin</h2>
+                <p>The story behind the music</p>
+            </div>
+            
+            <div class="mobile-about-content">
+                <div class="mobile-about-image">
+                    <div class="image-container">
+                        <div class="placeholder-image"></div>
+                    </div>
+                </div>
+                
+                <div class="mobile-about-text">
+                    <h3>Music Producer & Rapper</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Sed ut imperdiet nisi. Proin condimentum fermentum nunc.</p>
+                    
+                    <div class="mobile-skills">
+                        <div class="mobile-skill">
+                            <span>Music Production</span>
+                            <div class="skill-bar"><div class="skill-level" style="width: 95%"></div></div>
+                        </div>
+                        <div class="mobile-skill">
+                            <span>Rapping</span>
+                            <div class="skill-bar"><div class="skill-level" style="width: 90%"></div></div>
+                        </div>
+                        <div class="mobile-skill">
+                            <span>Sound Engineering</span>
+                            <div class="skill-bar"><div class="skill-level" style="width: 80%"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mobile Gallery Section -->
+    <section id="gallery" class="gallery-section mobile-gallery">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="neon-text">Gallery</h2>
+                <p>Moments captured in time</p>
+            </div>
+            
+            <div class="mobile-gallery-filter">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="performances">Performances</button>
+                <button class="filter-btn" data-filter="studio">Studio</button>
+                <button class="filter-btn" data-filter="behind-scenes">Behind Scenes</button>
+            </div>
+            
+            <div class="mobile-gallery-container">
+                <div class="mobile-gallery-item performances">
+                    <div class="gallery-image placeholder-image"></div>
+                    <div class="gallery-overlay">
+                        <h3>Live Performance</h3>
+                        <p>Summer Festival 2023</p>
+                    </div>
+                </div>
+                <div class="mobile-gallery-item studio">
+                    <div class="gallery-image placeholder-image"></div>
+                    <div class="gallery-overlay">
+                        <h3>Studio Session</h3>
+                        <p>Recording new album</p>
+                    </div>
+                </div>
+                <div class="mobile-gallery-item behind-scenes">
+                    <div class="gallery-image placeholder-image"></div>
+                    <div class="gallery-overlay">
+                        <h3>Behind The Scenes</h3>
+                        <p>Music video shoot</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mobile Testimonials Section -->
+    <section id="testimonials" class="testimonials mobile-testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="neon-text">Testimonials</h2>
+                <p>What people are saying</p>
+            </div>
+            
+            <div class="mobile-testimonial-container">
+                <div class="mobile-testimonial-item">
+                    <div class="testimonial-text">
+                        <p>Yassin DJ delivered an incredible performance at our event. His energy and music selection had everyone on the dance floor all night long!</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar"></div>
+                        <div class="testimonial-info">
+                            <h4>John Smith</h4>
+                            <p>Event Organizer</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mobile-testimonial-item">
+                    <div class="testimonial-text">
+                        <p>Working with Yassin on my album was an amazing experience. His production skills and attention to detail are unmatched in the industry.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar"></div>
+                        <div class="testimonial-info">
+                            <h4>Sarah Johnson</h4>
+                            <p>Recording Artist</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mobile Contact Section -->
+    <section id="contact" class="contact-section mobile-contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="neon-text">Get In Touch</h2>
+                <p>For bookings, collaborations, or just to say hello</p>
+            </div>
+            
+            <div class="mobile-contact-container">
+                <div class="mobile-contact-info">
+                    <div class="mobile-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <h3>Email</h3>
+                        <p>contact@yassindj.com</p>
+                    </div>
+                    <div class="mobile-contact-item">
+                        <i class="fas fa-phone"></i>
+                        <h3>Phone</h3>
+                        <p>+1 (123) 456-7890</p>
+                    </div>
+                    <div class="mobile-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3>Location</h3>
+                        <p>Los Angeles, CA</p>
+                    </div>
+                </div>
+                
+                <div class="mobile-contact-form">
+                    <form id="mobileContactForm">
+                        <div class="form-group">
+                            <input type="text" id="mobileName" name="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="mobileEmail" name="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="mobileSubject" name="subject" placeholder="Subject" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="mobileMessage" name="message" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mobile Footer -->
+    <footer class="footer mobile-footer">
+        <div class="container">
+            <div class="mobile-footer-content">
+                <div class="mobile-footer-logo">
+                    <h1>ECHOS</h1>
+                    <p>Music Producer & Rapper</p>
+                </div>
+                
+                <div class="mobile-footer-links">
+                    <a href="#home">Home</a>
+                    <a href="#music">Music</a>
+                    <a href="#tour">Tour</a>
+                    <a href="#about">About</a>
+                    <a href="#gallery">Gallery</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                
+                <div class="mobile-footer-social">
+                    <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="mobile-footer-bottom">
+                <p>&copy; 2023 Echos. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+{% endblock %}
